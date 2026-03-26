@@ -1,0 +1,2 @@
+class AudioAnalysisFailed(RuntimeError):
+    pass
