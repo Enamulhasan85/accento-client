@@ -3,9 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -15,6 +12,8 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Brand } from "@/components/Brand";
+import { Logo } from "@/components/Logo";
 
 const components: { title: string; href: string; description: string }[] = [
     {
@@ -52,42 +51,11 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Navbar() {
-    const navMenuItems = [
-        {
-            label: "Home",
-            href: "/",
-            description: "Beautifully designed components built with Tailwind CSS.",
-        },
-        {
-            label: "Introduction",
-            href: "/docs",
-            description: "Re-usable components built using Radix UI and Tailwind CSS.",
-        },
-        {
-            label: "Installation",
-            href: "/docs/installation",
-            description: "How to install dependencies and structure your app.",
-        },
-        {
-            label: "Typography",
-            href: "/docs/primitives/typography",
-            description: "Styles for headings, paragraphs, lists...etc",
-        },
-    ];
-
     return (
-        <nav
-            className={cn(
-                `border-border-light fixed top-0 z-50 flex h-[64px] items-center border-b bg-white px-8 py-5 2xl:h-[72px]`,
-                "w-full justify-center"
-            )}
-        >
-            {/*<Brand />*/}
-            {/*<ActionSection />*/}
-            <NavigationMenu viewport={false}>
+        <NavigationMenu viewport={false} className="bg-background border-border max-w-screen border-b">
+            <div className="flex h-16 w-full items-center justify-around px-4">
+                <Brand />
                 <NavigationMenuList>
-                    {}
-                    {/*<NavMenuItem/>*/}
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>Home</NavigationMenuTrigger>
                         <NavigationMenuContent>
@@ -95,42 +63,47 @@ export function Navbar() {
                                 <li className="row-span-3">
                                     <NavigationMenuLink asChild>
                                         <Link
-                                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                                            href="/"
+                                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-center rounded-md bg-gradient-to-b px-6 py-3 no-underline outline-none select-none focus:shadow-md"
+                                            href="/about"
                                         >
-                                            <div className="mt-4 mb-2 text-lg font-medium">shadcn/ui</div>
+                                            <Logo className="h-15 w-15 rounded-lg shadow-md" />
+                                            <div className="mb-2 text-lg font-medium text-orange-400">Accento</div>
                                             <p className="text-muted-foreground text-sm leading-tight">
-                                                Beautifully designed components built with Tailwind CSS.
+                                                Master your English accent with real-time AI feedback, personalized
+                                                lessons, and progress tracking.
                                             </p>
                                         </Link>
                                     </NavigationMenuLink>
                                 </li>
-                                {/*<ListItem href="/docs" title="Introduction">*/}
-                                {/*    Re-usable components built using Radix UI and Tailwind CSS.*/}
-                                {/*</ListItem>*/}
-                                {/*<ListItem href="/docs/installation" title="Installation">*/}
-                                {/*    How to install dependencies and structure your app.*/}
-                                {/*</ListItem>*/}
-                                {/*<ListItem href="/docs/primitives/typography" title="Typography">*/}
-                                {/*    Styles for headings, paragraphs, lists...etc*/}
-                                {/*</ListItem>*/}
+                                <ListItem href="/docs" title="What is Accento?">
+                                    Learn how Accento helps you practice and improve your English accent with real-time
+                                    AI feedback.
+                                </ListItem>
+                                <ListItem
+                                    href="https://play.google.com/store/apps/details?id=com.english.accent_training_app&hl=en"
+                                    title="Get on Play Store"
+                                >
+                                    Download the Accento app from Google Play to start training your accent on Android.
+                                </ListItem>
+                                <ListItem
+                                    href="https://apps.apple.com/us/app/accent-trainer/id6745178009"
+                                    title="Get on App Store"
+                                >
+                                    Access Accento on your iPhone and improve your pronunciation today.
+                                </ListItem>
                             </ul>
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>Components</NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            {/*<ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">*/}
-                            {/*    {components.map((component) => (*/}
-                            {/*        <ListItem*/}
-                            {/*            key={component.title}*/}
-                            {/*            title={component.title}*/}
-                            {/*            href={component.href}*/}
-                            {/*        >*/}
-                            {/*            {component.description}*/}
-                            {/*        </ListItem>*/}
-                            {/*    ))}*/}
-                            {/*</ul>*/}
+                            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {components.map((component) => (
+                                    <ListItem key={component.title} title={component.title} href={component.href}>
+                                        {component.description}
+                                    </ListItem>
+                                ))}
+                            </ul>
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
@@ -139,7 +112,27 @@ export function Navbar() {
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                 </NavigationMenuList>
-            </NavigationMenu>
-        </nav>
+
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/docs/primitives/alert-dialog">Alert Dialog</Link>
+                </NavigationMenuLink>
+            </div>
+        </NavigationMenu>
+    );
+}
+
+function ListItem({ title, children, href, ...props }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+    return (
+        <li {...props}>
+            <NavigationMenuLink
+                asChild
+                className="hover:text-primary focus:text-primary data-[state=open]:text-primary transition-colors focus:shadow-md"
+            >
+                <Link href={href}>
+                    <div className="text-sm leading-none font-medium">{title}</div>
+                    <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+                </Link>
+            </NavigationMenuLink>
+        </li>
     );
 }

@@ -1,29 +1,14 @@
 import type { Metadata } from "next";
 
-
-
-
-
-
 import "./globals.css";
 
-
-
 import { DM_Sans, Inter } from "next/font/google";
-
-
 
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 
-
-
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/navbar/Navbar";
-
-
-
-
 
 const inter = Inter({
     subsets: ["latin"],
@@ -42,6 +27,9 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
     title: "Accento - The Best Accent Training Platform",
     description: "Accento is the best platform to train your accent and improve your spoken English.",
+    icons: {
+        icon: "/logo.webp",
+    },
 };
 
 export default function RootLayout({
